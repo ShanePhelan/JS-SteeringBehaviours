@@ -12,8 +12,6 @@
         this.mass = mass || 10;
         this.velocity = new Vector2d(-1, 1);
         this.target = new Vector2d(250, 250);
-        this.desired = new Vector2d(0, 0);
-        this.steering = new Vector2d(0, 0);
         this.mouseX = 0;
         this.mouseY = 0;
 
@@ -32,25 +30,16 @@
         }, false);
     };
 
-    Boid.prototype.seek = function() {
-        this.desired = this.target.subtract(this.position);
-        this.desired.normalize();
-        this.desired.scale(this.MAX_VELOCITY);
-
-        this.steering = this.desired.subtract(this.velocity);
-    }
-
     Boid.prototype.update = function() {
         this.target._x = this.mouseX;
         this.target._y = this.mouseY;
 
-        this.seek();
-        this.steering.truncate(this.MAX_FORCE);
-        this.steering.scaleBy(1 / this.mass);
+        this.velocity = this.target.subtract(this.position);
+        this.velocity.normalize();
+        this.velocity.scaleBy(this.MAX_VELOCITY);
+        this.velocity.scaleBy(1 / this.mass);
 
-        this.velocity = this.velocity.add(this.steering);
         this.velocity.truncate(this.MAX_VELOCITY);
-
         this.position = this.position.add(this.velocity);
     };
 
@@ -83,16 +72,10 @@
 
     Boid.prototype.drawForces = function(context) {
         var velocity = this.velocity.clone();
-        var desired = this.desired.clone();
-        var steering = this.steering.clone();
 
         velocity.normalize();
-        desired.normalize();
-        steering.normalize();
 
         this.drawForceVector(context, velocity, '#00FF00');
-        this.drawForceVector(context, desired, '#FF0000');
-        this.drawForceVector(context, steering, '#0000FF');
     };
 
     Boid.prototype.drawForceVector = function(context, vector, colour) {

@@ -9,7 +9,8 @@ describe("Boid", function() {
     var boid;
 
     beforeEach(function () {
-        boid = new Boid();
+        var canvas = document.createElement('canvas');
+        boid = new Boid(new Vector2d(), 20, canvas);
     });
 
     afterEach(function () {

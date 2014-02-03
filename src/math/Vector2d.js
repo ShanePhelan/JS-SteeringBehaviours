@@ -1,11 +1,10 @@
 /**
  * Created with IntelliJ IDEA.
  * User: shanephelan
- * Date: 01/02/2014
- * Time: 16:35
+ * Date: 03/02/2014
+ * Time: 12:06
  * To change this template use File | Settings | File Templates.
  */
-
 'use strict'
 
 var Vector2d = function(x, y) {

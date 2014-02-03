@@ -18,7 +18,7 @@
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
 
-        this.boid = new Boid(new Vector2d(200,200), 35, canvas);
+        this.boid = new DrawableBoid(new Vector2d(200,200), 35, canvas);
 
         canvas.width = canvas.height = radius;
         target.appendChild(canvas);

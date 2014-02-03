@@ -1,4 +1,4 @@
-JS-SteeringBehaviours
+TalosJS
 =====================
 
-Examples of some of the many techniques used in AI, done with a JS twist
+Artificial Intelligence Javascript library

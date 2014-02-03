@@ -11,22 +11,51 @@
 
     var View = function(target) {
 
+        this.mouseX = 0;
+        this.mouseY = 0;
         this.element = target;
         this.update = tick.bind(this);
+        this.array = [];
 
         var radius = 500;
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
 
-        this.boid = new DrawableBoid(new Vector2d(200,200), 35, canvas);
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 35 + (Math.random() * 35), canvas));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 35 + (Math.random() * 35), canvas));
 
         canvas.width = canvas.height = radius;
         target.appendChild(canvas);
 
+        var self = this;
         function tick(time) {
-            this.boid.update();
-            this.boid.draw(context);
+            context.save();
+            context.clearRect(0,0,500,500);
+
+            var length = self.array.length;
+            for( var i = 0; i < length; i++)	{
+                var character = self.array[i];
+                character.draw(context);
+                character.update();
+            }
+
+            drawTarget(context);
+            context.restore();
         }
+
+        function drawCharacters(func) {
+
+        }
+
+        function setMousePos(canvas, evt) {
+            var rect = canvas.getBoundingClientRect();
+            self.mouseX = evt.clientX - rect.left;
+            self.mouseY = evt.clientY - rect.top;
+        }
+
+        canvas.addEventListener('mousemove', function(evt) {
+            setMousePos(canvas, evt);
+        }, false);
     };
 
     View.prototype.dispose = function() {

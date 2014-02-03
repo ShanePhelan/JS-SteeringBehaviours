@@ -58,7 +58,7 @@ Vector2d.prototype = {
         i = max / this.length();
         i = i < 1.0 ? 1.0 : i;
 
-        this.scale(i);
+        this.scaleBy(i);
     },
 
     clone : function() {

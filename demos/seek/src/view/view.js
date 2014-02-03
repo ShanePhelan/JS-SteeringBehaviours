@@ -11,8 +11,6 @@
 
     var View = function(target) {
 
-        this.mouseX = 0;
-        this.mouseY = 0;
         this.element = target;
         this.update = tick.bind(this);
         this.array = [];
@@ -21,8 +19,8 @@
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
 
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 35 + (Math.random() * 35), canvas));
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 35 + (Math.random() * 35), canvas));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 10, canvas));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 55 + (Math.random() * 35), canvas));
 
         canvas.width = canvas.height = radius;
         target.appendChild(canvas);
@@ -33,24 +31,23 @@
             context.clearRect(0,0,500,500);
 
             var length = self.array.length;
-            for( var i = 0; i < length; i++)	{
+            for(var i = 0; i < length; i++)	{
                 var character = self.array[i];
                 character.draw(context);
                 character.update();
             }
 
-            drawTarget(context);
             context.restore();
-        }
-
-        function drawCharacters(func) {
-
         }
 
         function setMousePos(canvas, evt) {
             var rect = canvas.getBoundingClientRect();
-            self.mouseX = evt.clientX - rect.left;
-            self.mouseY = evt.clientY - rect.top;
+
+            var length = self.array.length;
+            for(var i = 0; i < length; i++)	{
+                var character = self.array[i];
+                character.updateTarget(new Vector2d(evt.clientX - rect.left, evt.clientY - rect.top))
+            }
         }
 
         canvas.addEventListener('mousemove', function(evt) {

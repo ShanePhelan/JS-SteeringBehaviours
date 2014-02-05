@@ -26,18 +26,20 @@
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
 
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 10, context));
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 0 + (Math.random() * 20), context));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 10), context));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 10), context));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 10), context));
+        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 10), context));
 
-        canvas.width = this.canvasWidth;
-        canvas.height = this.canvasHeight;
+        canvas.width = View.CANVAS_WIDTH;
+        canvas.height = View.CANVAS_HEIGHT;
 
         target.appendChild(canvas);
 
         var self = this;
         function tick(time) {
             context.save();
-            context.clearRect(0, 0, self.canvasWidth, self.canvasHeight);
+            context.clearRect(0, 0, View.CANVAS_WIDTH, View.CANVAS_HEIGHT);
 
             var halfWidth = self.image.width / 2;
             var halfHeight = self.image.height / 2;
@@ -72,12 +74,12 @@
     View.prototype = {
         dispose : function() {
             this.element.removeChild(this.element.firstChild);
-        },
+        }
+    };
 
-        canvasWidth : 500,
+    View.CANVAS_WIDTH = 500;
 
-        canvasHeight : 500
-    }
+    View.CANVAS_HEIGHT = 500;
 
     demo.View = View;
 })(window.demo = window.demo || {});

@@ -69,6 +69,18 @@
             return force;
         },
 
+        flee : function(position, velocity, target) {
+            var force;
+
+            this.desired = position.subtract(target);
+            this.desired.normalize();
+            this.desired.scaleBy(this.maxVelocity);
+
+            force = this.desired.subtract(velocity);
+
+            return force;
+        },
+
         initialise : function(maxVelocity, slowingRadius) {
             this.maxVelocity = maxVelocity;
             this.slowingRadius = slowingRadius;

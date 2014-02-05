@@ -5,7 +5,7 @@
  * Time: 12:22
  * To change this template use File | Settings | File Templates.
  */
-(function(seek, soma) {
+(function(demo, soma) {
 
     'use strict'
 
@@ -16,20 +16,20 @@
         },
         init: function() {
             // mapping rules
-            this.injector.mapClass('timer', seek.TimerModel, true);
+            this.injector.mapClass('timer', demo.TimerModel, true);
 //            this.injector.mapClass('face', clock.FaceView);
 //            this.injector.mapClass('needleSeconds', clock.NeedleSeconds);
 //            this.injector.mapClass('needleMinutes', clock.NeedleMinutes);
 //            this.injector.mapClass('needleHours', clock.NeedleHours);
 //            // seek mediator
-            this.mediators.create(seek.SeekMediator, this.element.querySelector('.display'));
+            this.mediators.create(demo.DemoMediator, this.element.querySelector('.display'));
 //            // clock selector template
 //            this.createTemplate(clock.SelectorView, this.element.querySelector('.clock-selector'));
         },
         start: function() {
-            this.dispatcher.dispatch('create', seek.View);
+            this.dispatcher.dispatch('create', demo.View);
         }
     });
 
     var seekDemo = new SeekDemo(document.querySelector('.seek-app'));
-})(window.seek = window.seek || {}, soma);
+})(window.demo = window.demo || {}, soma);

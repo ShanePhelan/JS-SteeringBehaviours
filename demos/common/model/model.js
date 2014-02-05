@@ -5,7 +5,7 @@
  * Time: 15:35
  * To change this template use File | Settings | File Templates.
  */
-(function(seek) {
+(function(demo) {
     'use strict'
 
     var TimerModel = function() {
@@ -45,5 +45,5 @@
         this.callbacks.splice(this.callbacks.indexOf(callback), 1);
     };
 
-    seek.TimerModel = TimerModel;
-})(window.seek = window.seek || {});
+    demo.TimerModel = TimerModel;
+})(window.demo = window.demo || {});

@@ -19,16 +19,16 @@ Character.prototype = {
 
     initialise : function(position, mass, context) {
         this.boid = new Boid(position, mass);
-        this.loadImage();
+        this.loadImage(context);
     },
 
-    loadImage : function() {
+    loadImage : function(context) {
         var self = this;
         this.image = new Image();
         this.image.onload = function() {
             context.drawImage(self.image, 50, 50);
         }
-        this.image.src = "../assets/dog.png";
+        this.image.src = "../../assets/dog.png";
     },
 
     update : function() {
@@ -41,8 +41,6 @@ Character.prototype = {
 
         var halfWidth = self.image.width / 2;
         var halfHeight = self.image.height / 2;
-        var desiredX = boid.position._x;
-        var desiredY = boid.position._y;
 
         drawSelf(context);
         drawForces(context);
@@ -61,8 +59,8 @@ Character.prototype = {
             context.lineWidth = 5.0;
             context.strokeStyle = colour;
             context.beginPath();
-            context.moveTo(desiredX, desiredY);
-            context.lineTo(desiredX + vector._x * 100, desiredY + vector._y * 100);
+            context.moveTo(boid.position._x, boid.position._y);
+            context.lineTo(boid.position._x + vector._x * 100, boid.position._y + vector._y * 100);
             context.closePath();
             context.stroke();
         }

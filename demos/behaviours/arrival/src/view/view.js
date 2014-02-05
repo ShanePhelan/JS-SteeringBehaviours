@@ -5,7 +5,7 @@
  * Time: 16:00
  * To change this template use File | Settings | File Templates.
  */
-(function(arrival) {
+(function(demo) {
 
     'use strict'
 
@@ -21,7 +21,7 @@
         this.image.onload = function() {
             context.drawImage(self.image, 50, 50);
         }
-        this.image.src = "../assets/cat.png";
+        this.image.src = "../../assets/cat.png";
 
         var radius = 1000;
         var canvas = document.createElement('canvas');
@@ -72,5 +72,5 @@
         this.element.removeChild(this.element.firstChild);
     };
 
-    arrival.View = View;
-})(window.arrival = window.arrival || {});
+    demo.View = View;
+})(window.demo = window.demo || {});

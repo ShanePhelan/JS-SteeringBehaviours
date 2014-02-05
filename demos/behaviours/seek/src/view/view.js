@@ -5,7 +5,7 @@
  * Time: 16:00
  * To change this template use File | Settings | File Templates.
  */
-(function(seek) {
+(function(demo) {
 
     'use strict'
 
@@ -14,8 +14,16 @@
         this.element = target;
         this.update = tick.bind(this);
         this.array = [];
+        this.mouseX = 0;
+        this.mouseY = 0;
 
-        var radius = 500;
+        this.image = new Image();
+        this.image.onload = function() {
+            context.drawImage(self.image, 50, 50);
+        }
+        this.image.src = "../../assets/cat.png";
+
+        var radius = 1000;
         var canvas = document.createElement('canvas');
         var context = canvas.getContext('2d');
 
@@ -28,8 +36,11 @@
         var self = this;
         function tick(time) {
             context.save();
-            context.clearRect(0,0,500,500);
+            context.clearRect(0,0,1000,1000);
 
+            var halfWidth = self.image.width / 2;
+            var halfHeight = self.image.height / 2;
+            context.drawImage(self.image, self.mouseX - halfWidth, self.mouseY - halfHeight);
             var length = self.array.length;
             for(var i = 0; i < length; i++)	{
                 var character = self.array[i];
@@ -42,11 +53,13 @@
 
         function setMousePos(canvas, evt) {
             var rect = canvas.getBoundingClientRect();
+            self.mouseX = evt.clientX - rect.left;
+            self.mouseY = evt.clientY - rect.top;
 
             var length = self.array.length;
             for(var i = 0; i < length; i++)	{
                 var character = self.array[i];
-                character.updateTarget(new Vector2d(evt.clientX - rect.left, evt.clientY - rect.top))
+                character.updateTarget(new Vector2d(self.mouseX, self.mouseY))
             }
         }
 
@@ -59,5 +72,5 @@
         this.element.removeChild(this.element.firstChild);
     };
 
-    seek.View = View;
-})(window.seek = window.seek || {});
+    demo.View = View;
+})(window.demo = window.demo || {});

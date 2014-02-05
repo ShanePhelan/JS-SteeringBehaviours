@@ -5,10 +5,10 @@
  * Time: 15:16
  * To change this template use File | Settings | File Templates.
  */
-(function(arrival) {
+(function(demo) {
     'use strict'
 
-    var ArrivalMediator = function(target, dispatcher, mediators, timer) {
+    var DemoMediator = function(target, dispatcher, mediators, timer) {
         var view;
 
         dispatcher.addEventListener('create', function(event) {
@@ -28,6 +28,6 @@
         });
     };
 
-    arrival.ArrivalMediator = ArrivalMediator;
+    demo.DemoMediator = DemoMediator;
 
-})(window.arrival = window.arrival || {});
+})(window.demo = window.demo || {});

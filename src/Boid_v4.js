@@ -1,15 +1,15 @@
 /**
  * Created with IntelliJ IDEA.
  * User: shanephelan
- * Date: 30/01/2014
- * Time: 20:10
+ * Date: 06/02/2014
+ * Time: 17:24
  * To change this template use File | Settings | File Templates.
  */
 
 'use strict';
 
-var Boid = function(position, mass) {
-    this.initialise(position, mass);
+var Boid = function(position, mass, boid) {
+    this.initialise(position, mass, boid);
 };
 
 /**
@@ -49,7 +49,7 @@ Boid.prototype = {
     /**
      * This Boids target vector.
      * @property target
-     * @type Vector2d
+     * @type Boid
      **/
     target : null,
 
@@ -74,11 +74,11 @@ Boid.prototype = {
      * @param {Number} the mass of this Boid.
      * @protected
      **/
-    initialise : function(position, mass) {
+    initialise : function(position, mass, boid) {
         this.position = position || new Vector2d(0, 0);
         this.mass = mass || 20;
         this.velocity = new Vector2d(-1, 1);
-        this.target = new Vector2d(250, 250);
+        this.target = boid;
         this.steering = new Steering(Boid.MAX_VELOCITY + (Math.random() * 10), 150);
 
         this.velocity.truncate(Boid.MAX_VELOCITY);
@@ -95,7 +95,7 @@ Boid.prototype = {
      * @param {Sprite|MovieClip} target The instance to manage.
      **/
     update : function() {
-        var result = this.steering.wander(this.velocity);
+        var result = this.steering.evade(this.position, this.velocity, this.target);
         result.truncate(Boid.MAX_FORCE);
         result.scaleBy(1 / this.mass);
 

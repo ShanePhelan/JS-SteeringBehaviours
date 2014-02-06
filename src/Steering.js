@@ -94,7 +94,7 @@
             return force;
         },
 
-        evade : function(position, target) {
+        evade : function(position, velocity, target) {
             var distance = target.position.subtract(position);
 
             var updatesNeeded = distance.length() / this.maxVelocity;
@@ -104,7 +104,7 @@
 
             var targetFuturePosition = target.position.clone().add(tv);
 
-            return this.flee(targetFuturePosition);
+            return this.flee(position, velocity, targetFuturePosition);
         },
 
         pursuit : function() {

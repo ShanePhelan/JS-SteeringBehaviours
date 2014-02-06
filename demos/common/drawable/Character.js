@@ -7,8 +7,8 @@
  */
     'use strict'
 
-    var Character = function(position, mass, context) {
-        this.initialise(position, mass, context);
+    var Character = function(position, mass, context, target) {
+        this.initialise(position, mass, context, target);
     };
 
     Character.prototype = {
@@ -17,8 +17,8 @@
 
         boid : null,
 
-        initialise : function(position, mass, context) {
-            this.boid = new Boid(position, mass);
+        initialise : function(position, mass, context, target) {
+            this.boid = new Boid(position, mass, target);
             this.loadImage(context);
         },
 

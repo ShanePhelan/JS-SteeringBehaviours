@@ -27,10 +27,9 @@
         canvas.style.border = "2px solid #000000";
         var context = canvas.getContext('2d');
 
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 20), context));
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 20), context));
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 20), context));
-        this.array.push(new Character(new Vector2d(0 + (Math.random() * 400), 0 + (Math.random() * 400)), 20 + (Math.random() * 20), context));
+        for (var i = 0; i < View.NUMBER_OF_CHARACTERS; i++) {
+            this.array.push(new Character(new Vector2d(0 + (Math.random() * View.CANVAS_WIDTH), 0 + (Math.random() * View.CANVAS_HEIGHT)), 20 + (Math.random() * 20), context));
+        }
 
         canvas.width = View.CANVAS_WIDTH;
         canvas.height = View.CANVAS_HEIGHT;
@@ -78,7 +77,9 @@
         }
     };
 
-    View.CANVAS_WIDTH = 500;
+    View.NUMBER_OF_CHARACTERS = 15;
+
+    View.CANVAS_WIDTH = 1000;
 
     View.CANVAS_HEIGHT = 500;
 

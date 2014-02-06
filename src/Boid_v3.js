@@ -19,9 +19,9 @@ var Boid = function(position, mass) {
  * @default "6"
  * @readonly
  **/
-Boid.MAX_VELOCITY = 2;
+Boid.MAX_VELOCITY = 3;
 
-Boid.MAX_FORCE = 0.6;
+Boid.MAX_FORCE = 8;
 
 Boid.prototype = {
 
@@ -95,7 +95,7 @@ Boid.prototype = {
      * @param {Sprite|MovieClip} target The instance to manage.
      **/
     update : function() {
-        var result = this.steering.flee(this.position, this.velocity, this.target);
+        var result = this.steering.wander(this.velocity);
         result.truncate(Boid.MAX_FORCE);
         result.scaleBy(1 / this.mass);
 
@@ -104,18 +104,31 @@ Boid.prototype = {
 
         this.position = this.position.add(this.velocity);
 
-        if (this.position._x < 0 || this.position._x > window.demo.View.CANVAS_WIDTH
-            || this.position._y < 0 || this.position._y > window.demo.View.CANVAS_HEIGHT) {
-            this.reset();
+        if (this.position._x < 0) {
+            this.position._x = window.demo.View.CANVAS_WIDTH;
+        } else if (this.position._x > window.demo.View.CANVAS_WIDTH) {
+            this.position._x = 0;
+        } else if (this.position._y < 0) {
+            this.position._y = window.demo.View.CANVAS_HEIGHT;
+        } else if (this.position._y > window.demo.View.CANVAS_HEIGHT) {
+            this.position._y = 0;
         }
+
+//        if (this.position._x < 0 || this.position._x > window.demo.View.CANVAS_WIDTH
+//            || this.position._y < 0 || this.position._y > window.demo.View.CANVAS_HEIGHT) {
+//            this.reset();
+//        }
+
+        // Adjust boid rodation to match the velocity vector.
+//        rotation = 90 + (180 * getAngle(velocity)) / Math.PI;
     },
 
     reset : function() {
         this.position._x = window.demo.View.CANVAS_WIDTH / 2;
         this.position._y = window.demo.View.CANVAS_HEIGHT / 2;
 
-        this.velocity.x = -1 * (Math.random() < 0.5 ? -2 : 1);
-        this.velocity.y = -1 * (Math.random() < 0.5 ? -2 : 1);
+        this.velocity._x = -1 * (Math.random() < 0.5 ? -2 : 1);
+        this.velocity._y = -1 * (Math.random() < 0.5 ? -2 : 1);
 
         this.velocity.truncate(Boid.MAX_VELOCITY * 0.5);
     }

@@ -27,6 +27,8 @@
             this.image = new Image();
             this.image.onload = function() {
                 context.drawImage(self.image, 50, 50);
+                self.image.style.width = "50%";
+                self.image.style.height = "auto";
             }
             this.image.src = "../../assets/dog.png";
         },
@@ -56,11 +58,11 @@
             }
 
             function drawForceVector(context, vector, colour) {
-                context.lineWidth = 5.0;
+                context.lineWidth = 2.0;
                 context.strokeStyle = colour;
                 context.beginPath();
                 context.moveTo(boid.position._x, boid.position._y);
-                context.lineTo(boid.position._x + vector._x * 100, boid.position._y + vector._y * 100);
+                context.lineTo(boid.position._x + vector._x * 50, boid.position._y + vector._y * 50);
                 context.closePath();
                 context.stroke();
             }

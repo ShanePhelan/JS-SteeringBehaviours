@@ -21,10 +21,12 @@
             for (; i < l;  i++) {
                 this.callbacks[i](this.time);
             }
-        }.bind(this), 100);
+        }.bind(this), 1000 / TimerModel.FRAME_RATE);
 
         this.update();
     };
+
+    TimerModel.FRAME_RATE = 25;
 
     TimerModel.prototype.update = function() {
         this.time.now = new Date();

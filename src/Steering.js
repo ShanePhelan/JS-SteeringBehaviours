@@ -12,6 +12,12 @@
         this.initialise(maxVelocity, slowingRadius);
     };
 
+    Steering.CIRCLE_DISTANCE = 60;
+
+    Steering.CIRCLE_RADIUS = 120;
+
+    Steering.ANGLE_CHANGE = 1;
+
     Steering.prototype = {
 
         /**
@@ -34,6 +40,13 @@
          * @type Number
          **/
         slowingRadius : 0,
+
+        /**
+         * The radius of the target when slowing will occur.
+         * @property wanderAngle
+         * @type Number
+         **/
+        wanderAngle : 0,
 
         seek : function(position, velocity, target) {
             var force;
@@ -79,6 +92,55 @@
             force = this.desired.subtract(velocity);
 
             return force;
+        },
+
+        evade : function(position, target) {
+            var distance = target.position.subtract(position);
+
+            var updatesNeeded = distance.length() / this.maxVelocity;
+
+            var tv = target.velocity.clone();
+            tv.scaleBy(updatesNeeded);
+
+            var targetFuturePosition = target.position.clone().add(tv);
+
+            return this.flee(targetFuturePosition);
+        },
+
+        pursuit : function() {
+
+        },
+
+        wander : function(velocity) {
+            // Calculate the circle center
+            var circleCenter = velocity.clone();
+            circleCenter.normalize();
+            circleCenter.scaleBy(Steering.CIRCLE_DISTANCE);
+            //
+            // Calculate the displacement force
+            var direction = Math.random() < 0.5 ? -1 : 1;
+            var displacement = new Vector2d(0, direction);
+            displacement.scaleBy(Steering.CIRCLE_RADIUS);
+            //
+            // Randomly change the vector direction
+            // by making it change its current angle
+            this.setAngle(displacement, this.wanderAngle);
+            //
+            // Change wanderAngle just a bit, so it
+            // won't have the same value in the
+            // next game frame.
+            this.wanderAngle += Math.random() * Steering.ANGLE_CHANGE - Steering.ANGLE_CHANGE * .5;
+            //
+            // Finally calculate and return the wander force
+            var wanderForce = circleCenter.add(displacement);
+            console.log("WanderForce x: " + wanderForce._x + " y: " + wanderForce._y);
+            return wanderForce;
+        },
+
+        setAngle : function(vector, value) {
+            var len = vector.length();
+            vector._x = Math.cos(value) * len;
+            vector._y = Math.sin(value) * len;
         },
 
         initialise : function(maxVelocity, slowingRadius) {

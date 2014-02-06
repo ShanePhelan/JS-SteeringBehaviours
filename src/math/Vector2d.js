@@ -56,7 +56,7 @@ Vector2d.prototype = {
         var i;
 
         i = max / this.length();
-        i = i < 1.0 ? 1.0 : i;
+        i = i < 1.0 ? i : 1.0;
 
         this.scaleBy(i);
     },
